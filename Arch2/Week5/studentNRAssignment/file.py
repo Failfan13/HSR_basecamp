@@ -33,9 +33,7 @@ def validate_name(first, last):
             return name
         else:
             for char in name:
-                if (
-                    char.isalpha() is not True
-                        and char.isspace() is not True):
+                if char.isalpha() is not True and char.isspace() is not True:
                     return name
 
 
