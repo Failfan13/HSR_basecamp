@@ -1,4 +1,4 @@
-def christmas_verse(day):
+def next_verse(day):
     verse_order = []
     repeat_text = (
         'A partridge in a pear tree',
@@ -21,7 +21,10 @@ def christmas_verse(day):
         verse_order.insert(0, verse)
     return ''.join(verse_order)
 
-if __name__=='__main__':
+if __name__ == '__main__':
     for i in range(1, 13):
-        print(christmas_verse(i))
+        verse = next_verse(i)
+        text = f'''on the {i}nd day of christmas,
+my true love sent to me'''
+        print(text + verse)
         
