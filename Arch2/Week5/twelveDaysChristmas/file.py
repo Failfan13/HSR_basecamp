@@ -2,10 +2,10 @@ def next_verse(day):
     verse_order = []
     repeat_text = (
         'A partridge in a pear tree',
-        'Two turtle doves',
+        'Two turtledoves',
         'Three french hens',
         'Four calling birds',
-        'Five golden rings',
+        'five gold rings (five golden rings)',
         'Six geese a-laying',
         'Seven swans a-swimming',
         'Eight maids a-milking',
@@ -16,15 +16,18 @@ def next_verse(day):
     for i in range(day):
         verse = repeat_text[i]
         if i == 1:
-            verse += ', and'
-        verse += '\n'
+            day = 'nd'
+            verse += ' And '
+        elif i == 0:
+            day = 'st'
+        else:
+            verse += ', '
+            day = 'nd'
         verse_order.insert(0, verse)
-    return ''.join(verse_order)
+        text = f'on the {i+1}{day} day of christmas, my true love sent to me '
+    return text + ''.join(verse_order)
+
 
 if __name__ == '__main__':
     for i in range(1, 13):
-        verse = next_verse(i)
-        text = f'''on the {i}nd day of christmas,
-my true love sent to me'''
-        print(text + verse)
-        
+        print(next_verse(i))
