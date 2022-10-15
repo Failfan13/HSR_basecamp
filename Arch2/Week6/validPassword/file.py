@@ -1,19 +1,36 @@
-def pass_check(inp):
+def pass_check():
+    password = set({})
     valid = False
-    while valid is False:
-        print(inp)
-        valid = True
+    tries = 0
+    while valid is False and tries <= 3:
+        inp = input('your password?')
+        for char in inp:
+            password.add(char)
+
+        upp = False
+        low = False
+        num = False
+        spe = False
+
+        for char in password:
+            if char in ('*', '@', '!', '?'):
+                spe = True
+            elif ord(char) in range(65, 91):
+                upp = True
+            elif ord(char) in range(97, 123):
+                low = True
+            elif ord(char) in range(48, 58):
+                num = True
+
+        if True is upp and low and num and spe:
+            valid = True
+            return print('valid')
+        else:
+            valid = False
+            tries += 1
+            print('invalid')
     return
 
 
-def num_check(digit):
-    print(digit)
-
-
-def letter_check(char):
-    print(char)
-
-
 if __name__ == '__main__':
-    inp = input('your password?')
-    pass_check(inp)
+    pass_check()
