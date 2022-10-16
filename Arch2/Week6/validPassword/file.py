@@ -1,7 +1,8 @@
 def pass_check():
-    password = set({})
+    password = set({'ok'})
     valid = False
     tries = 0
+    oksok = password.issubset(password.pop())
     while valid is False and tries <= 3:
         inp = input('your password?')
         for char in inp:
@@ -22,13 +23,16 @@ def pass_check():
             elif ord(char) in range(48, 58):
                 num = True
 
-        if True is upp and low and num and spe:
+        if len(password) not in range(8, 11):
+            tries += 1
+            print('invalid')
+        elif True is upp and low and num and spe:
             valid = True
             return print('valid')
         else:
-            valid = False
             tries += 1
             print('invalid')
+    print(oksok)
     return
 
 
