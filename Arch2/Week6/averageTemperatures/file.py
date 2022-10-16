@@ -21,7 +21,7 @@ def temp_check(temps):
     average9510 = 0
     average9520 = 0
     while day < len(temps[0][2]):
-        if round(float(temps[0][2][day]) - float(temps[1][2][day])) in range(-5, 6):
+        if round(float(temps[0][2][day]) - float(temps[1][2][day])) in range(-4, 4):
             average9510 += 1
         if round(float(temps[0][2][day]) - float(temps[2][2][day])) in range(-5, 6):
             average9520 += 1
