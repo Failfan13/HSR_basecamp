@@ -19,23 +19,21 @@ def message_to_morse(inp):
     message = ''
     for char in inp:
         if char.upper() in MORSE_CODE_DICT.keys():
-            message += MORSE_CODE_DICT[char.upper()]+' '
+            message += MORSE_CODE_DICT[char.upper()] + ' '
         else:
-            message = f"Can't convert char [{char.upper()}] if there is no mapping for specific characters."
+            message = f"Can't convert char [{char.upper()}]"
     return message
 
 
 def morse_to_message(inp):
     message = ''
-    inp = inp.split(' ')
-    for char in inp:
-        is_text = True
+    inp = inp.replace('    ', ' 00 ')
+    for char in inp.split(' '):
         for key, val in MORSE_CODE_DICT.items():
             if char == val:
-                is_text = False
                 message += key
-        if is_text is True:
-            message = f"Can't convert char [{char}] if there is no mapping for specific characters."
+        if char == '00':
+            message += ' '
     return message
 
 
@@ -51,9 +49,5 @@ def translate_text(inp):
 
 
 if __name__ == "__main__":
-    inp = input('Type your message')
-    print(message_to_morse(inp))
-    inp = input('Type your message')
-    print(morse_to_message(inp))
     inp = input('Type your message')
     print(translate_text(inp))
