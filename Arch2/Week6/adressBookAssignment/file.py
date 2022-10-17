@@ -58,9 +58,9 @@ def merge_contacts():
     for cont in addressbook:
         multiple = 0
         for conts in addressbook:
-            if ((conts['last_name'],
-                 conts['first_name']) == (cont['first_name'],
-                                          cont['last_name'])):
+            if ((conts['first_name'],
+                 conts['last_name']) == (cont['first_name'],
+                                         cont['last_name'])):
                 multiple += 1
             if multiple > 1:
                 for emails in conts['emails']:
@@ -113,6 +113,7 @@ def select_menu():
         else:
             exit = True
             return print('invalid')
+        write_to_json('contacts.json')
 
 
 def main(json_file):
