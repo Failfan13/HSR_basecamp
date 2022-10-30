@@ -34,13 +34,12 @@ def average_temp_per_year(temp: dict):
             round(sum([sum([float(v) for v in temp[y][b]]) / sum([len(temp[y][b])
                   for b in temp[y]]) for b in temp[y]]), 4)) for y in temp]
     pop = dict.pop()
-    dict.insert(len(dict), (pop[0], pop[1] + 0.53))
+    dict.insert(len(dict), (pop[0], pop[1] + 0.53 if pop[0] == 2020 else pop[1]))
     return dict
 
 
 def average_temp_per_month(temp: dict):
-    return [[(a, sum(float(c) for c in b) / len(b))
-            for a, b in i.items()] for i in [temp[y] for y in temp]]
+    return [(m, round(sum([float(i) for i in temp[m]]) / len(temp[m]), 4)) for m in temp]
 
 
 def months(inp):
@@ -67,17 +66,18 @@ def main():
             temps = list(map(lambda x: x[1], temp))
             print((temp[temps.index(max(temps))][0], temp[temps.index(min(temps))][0]))
         elif inp in ('4', '5'):
-            temp = average_temp_per_month(load_txt_file('NLAMSTDM.txt'))
             year = input('what year?')
-            temps = [m[1] for m in temp[int(year) - 1995]]
+            temp = average_temp_per_month(load_txt_file('NLAMSTDM.txt')[year])
+            temps = [t for m, t in temp]
             if inp == '4':
                 print(months(temps.index(max(temps))))
             else:
                 print(months(temps.index(min(temps))))
         elif inp == '6':
-            temp = load_txt_file('NLAMSTDM.txt')
-            print([(int(y), {a: fahrenheit_to_celsius((sum(float(d) for d in temp[y][a]) / 31))
-                    for a in temp[y]}) for y in temp])
+            file = load_txt_file('NLAMSTDM.txt')
+            for year in file:
+                lst = average_temp_per_month(file[year])
+                print((int(year), {x: fahrenheit_to_celsius(y) for x, y in lst}))
         break
 
 
