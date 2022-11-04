@@ -1,0 +1,212 @@
+[
+  {
+    "timestamp": 1667488955,
+    "temperature": 36.172178,
+    "humidity": 29.294345,
+    "pressure": 1004.871096,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667489127,
+    "temperature": 36.965837,
+    "humidity": 30.41225,
+    "pressure": 1007.481527,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667489247,
+    "temperature": 37.387358,
+    "humidity": 28.009075,
+    "pressure": 1004.78307,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667489688,
+    "temperature": 33.18155,
+    "humidity": 28.785982,
+    "pressure": 1007.862692,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667490049,
+    "temperature": 36.902656,
+    "humidity": 27.427759,
+    "pressure": 1005.532873,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667490290,
+    "temperature": 33.864584,
+    "humidity": 28.390106,
+    "pressure": 1005.036809,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667490531,
+    "temperature": 34.874355,
+    "humidity": 27.928082,
+    "pressure": 1004.356454,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667491134,
+    "temperature": 33.482392,
+    "humidity": 27.920234,
+    "pressure": 1005.059949,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667491375,
+    "temperature": 33.591948,
+    "humidity": 28.818072,
+    "pressure": 1006.298143,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667491616,
+    "temperature": 33.926914,
+    "humidity": 27.924712,
+    "pressure": 1005.330213,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667489447,
+    "temperature": 38.145144,
+    "humidity": 29.367209,
+    "pressure": 1006.027421,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667489808,
+    "temperature": 35.148949,
+    "humidity": 29.917838,
+    "pressure": 1004.335315,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667489929,
+    "temperature": 35.925945,
+    "humidity": 28.588539,
+    "pressure": 1006.043111,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667490170,
+    "temperature": 38.137293,
+    "humidity": 27.056759,
+    "pressure": 1007.114916,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667490411,
+    "temperature": 36.941888,
+    "humidity": 27.996978,
+    "pressure": 1004.334514,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667490652,
+    "temperature": 35.598238,
+    "humidity": 30.33549,
+    "pressure": 1005.916939,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667491254,
+    "temperature": 35.578025,
+    "humidity": 29.304883,
+    "pressure": 1005.557593,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667491495,
+    "temperature": 37.308049,
+    "humidity": 28.068753,
+    "pressure": 1005.95087,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667491977,
+    "temperature": 35.338411,
+    "humidity": 29.785828,
+    "pressure": 1004.697487,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667492098,
+    "temperature": 38.36205,
+    "humidity": 28.499682,
+    "pressure": 1004.508871,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667488714,
+    "temperature": 34.886007,
+    "humidity": 29.418794,
+    "pressure": 1004.808791,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667488834,
+    "temperature": 37.304005,
+    "humidity": 27.183122,
+    "pressure": 1005.795165,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667489327,
+    "temperature": 38.692635,
+    "humidity": 27.95971,
+    "pressure": 1005.054436,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667490893,
+    "temperature": 38.229398,
+    "humidity": 27.501399,
+    "pressure": 1006.170927,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667491736,
+    "temperature": 36.351763,
+    "humidity": 27.913572,
+    "pressure": 1004.554858,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667491857,
+    "temperature": 36.61937,
+    "humidity": 27.536481,
+    "pressure": 1006.727153,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667489568,
+    "temperature": 34.477868,
+    "humidity": 28.797309,
+    "pressure": 1006.336814,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667490772,
+    "temperature": 37.296553,
+    "humidity": 28.35488,
+    "pressure": 1005.736562,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667491013,
+    "temperature": 34.802322,
+    "humidity": 27.496937,
+    "pressure": 1004.44826,
+    "node_id": 658
+  },
+  {
+    "timestamp": 1667492218,
+    "temperature": 37.091174,
+    "humidity": 28.787762,
+    "pressure": 1004.380148,
+    "node_id": 658
+  }
+]
