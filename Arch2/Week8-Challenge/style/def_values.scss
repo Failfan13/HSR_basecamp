@@ -1,0 +1,19 @@
+//colors
+$main_col: #e4e4e4;
+$main_col2: #d9e5eb;
+$seco_col: #e8e8e8;
+$text_col: #1b1818;
+$shadow: #1b181825;
+$gradient: linear-gradient(to bottom left, $main_col2, $main_col);
+//text
+$font: 'Roboto', sans-serif;
+$font_size: 1.0em;
+$font_size_small: calc($font_size - 0.2em);
+$font_size_big: calc($font_size + 1.4em);
+//def sizes
+$header_height: 130px;
+$main_height: calc(100vh - calc($header_height * 1.7));
+$content_width: 100vw;
+//def vals
+$padds: 20px
+

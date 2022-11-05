@@ -1,0 +1,63 @@
+@mixin text {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.0em;
+    font-weight: 400;
+    color: $text_col
+}
+
+@mixin article{
+    @include container;
+    @include round_out;
+    @include shadow;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: $seco_col;
+    padding: 20px $padds;
+    height: 100%;
+}
+
+@mixin round_out{
+    border-radius: 20px;
+}
+@mixin shadow{
+    box-shadow: 0px 0px 30px $shadow;
+}
+
+@mixin shadow_small{
+    box-shadow: inset 0px 0px 3px $shadow;
+}
+
+@mixin dat_tuple {
+    @include text;
+    @include shadow_small;
+    border-radius: 10px;
+    font-size: $font_size_small;
+    padding: 2px 0px;
+    background-color: $main_col;
+    color: $text_col;
+    display: flex;
+    justify-content: center;
+    flex: 0 1 calc(calc(100% / 3) - 5px);
+}
+
+@mixin hide {
+    display: none;
+    margin: 0;
+    z-index: -1;
+}
+
+@mixin container {
+    display: block;
+    padding: 0 20px;
+}
+
+@mixin navigation {
+    list-style: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@mixin graph_small {
+    
+}

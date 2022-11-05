@@ -1,7 +1,67 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import "mixins.scss";
+@import "def_values";
 
-@media only screen and (max-width: 640px) {
-    .container{
-        color: green;
+*{
+    box-sizing:border-box; 
+    margin: 0px;
+    border: 0px;
+    & html, body{
+        height: 100vh;
+        background-image: $gradient;
     }
 }
+header.container {
+    @include container;
+    display: flex;
+    align-items: center;
+    height: $header_height;
+    & p{
+        @include text;
+        font-weight: 700;
+        font-size: $font_size_big;
+        margin: 10px 0px;
+    }
+}
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: $main_height;
+    padding: 0 $padds;
+    & article {
+        @include article;
+        
+        & section.info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            & p {
+                @include dat_tuple
+            }
+            & nav{
+                margin: 10px 0px;
+                flex: 1 1 100%;
+                justify-content: flex-start;
+            }
+            & nav ul{
+                list-style: none;
+                padding: 0;
+                width: calc(100% / 3);
+            }
+        }
+    }
+}
+.hide {
+    @include hide;
+}
+
+/*
+@include text;
+            border-radius: 10px;
+            font-size: $font_size_small;
+            padding: 5px 10px;
+            margin: 5px 0;
+            background-color: $text_col;
+            color: $seco_col;
+*/
