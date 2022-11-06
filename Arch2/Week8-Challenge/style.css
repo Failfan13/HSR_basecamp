@@ -156,4 +156,62 @@ main article.container_UI nav ul li a {
   margin: 10px;
 }
 
+@media only screen and (min-width: 768px) {
+  article canvas {
+    width: 95% !important;
+    height: 50% !important;
+  }
+}
+@media only screen and (min-width: 1080px) {
+  main.container {
+    flex-direction: row;
+    padding-right: 0;
+  }
+  main.container article {
+    background-color: transparent;
+    box-shadow: none;
+  }
+  main.container article:first-child {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+  }
+  main.container article section canvas {
+    height: 80% !important;
+    width: 90% !important;
+  }
+  main.container article section.show {
+    width: 45%;
+    height: 35%;
+    order: 1;
+  }
+  main.container article section.show.main {
+    width: 50%;
+    height: 40%;
+    order: 0;
+  }
+  main.container article section.info {
+    order: 3;
+  }
+  main.container article.container_UI {
+    width: 300px;
+    background-color: #540ff5;
+    border-radius: 20px 0px 0px 0px;
+  }
+  main.container article.container_UI nav ul {
+    flex-flow: column wrap;
+    align-items: center;
+    gap: 20px;
+    padding: 0px 20px;
+  }
+  main.container article.container_UI nav ul li {
+    background-color: #e8e8e8;
+    box-shadow: 0px 0px 30px rgba(27, 24, 24, 0.1450980392);
+    width: 100%;
+  }
+  main.container article.container_UI nav ul li a {
+    color: #540ff5;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

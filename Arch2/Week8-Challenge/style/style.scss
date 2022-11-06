@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import "mixins.scss";
 @import "def_values";
-@import "media_query";
 @import "effects";
 
 *{
@@ -87,3 +86,5 @@ main {
         margin: 10px;
     }
 }
+
+@import "media_query";

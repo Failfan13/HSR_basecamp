@@ -1,9 +1,11 @@
+const screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+let count = 0;
 export default function dataVisuals (data, title, order) {
-    const dataContainer = document.querySelector('.info');
+    let dataContainer = document.querySelector('.info');
     const labels = ['mean', 'min', 'max', 'devi'];
     const dataBox = document.createElement('article');
     dataBox.style.order = order
-    dataBox.id = 'dataSet'
+    dataBox.className += 'dataSet'
     let dataId = document.createElement('p');
     dataId.className = 'dataId';
     dataId.innerHTML = title;
@@ -31,6 +33,11 @@ export default function dataVisuals (data, title, order) {
         element.innerHTML = labels[i]+': '+codex;
         dataBox.appendChild(element);
     }
-    dataContainer.insertBefore(dataBox, dataContainer.childNodes[1]);
-    document.createElement('p');
+    if (screenWidth > 1080 & count > 2) {
+        dataContainer = ''
+    } else {
+        dataContainer.insertBefore(dataBox, dataContainer.childNodes[1]);
+    }
+
+    count++
 }

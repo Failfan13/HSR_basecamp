@@ -2,6 +2,8 @@ import dataArrs from './modula/jsonRaspData.js';
 import {createChart, createChartData} from './modula/chart.js';
 import dataVisuals from './modula/interfaceData.js';
 
+const screenWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
 const checkChar = () => {
     const show = document.querySelectorAll('.show')
     let order = 0
@@ -26,7 +28,10 @@ const checkChar = () => {
             return
         } 
         let data = createChartData(dataArrs(), title)
-        dataVisuals(data, title, order)
+        if (screenWidth < 1080 ){
+            dataVisuals(data, title, order)
+        }
+        
         createChart(i.children, data[0], data[1])
         order++
     })
@@ -35,29 +40,46 @@ const checkChar = () => {
 const uInteract = document.querySelectorAll('.btn')
 const graphs = document.querySelectorAll('.chart')
 
-
 const btnPress = (data) => {
     uInteract.forEach(i => {
         i.parentNode.removeAttribute('id')
     })
-    graphs.forEach(i => {
-        i.classList.remove(i.classList[2])
-        i.className += ' hide'
-        if (i.childNodes.length > 0){
-            i.removeChild(i.childNodes[0])
-        }
-    })
-    graphs.forEach(i => {
-        if (i.classList[1] == data.path[0].classList[1]) {
-            i.classList.remove('hide')
-            i.className += ' show';
-            const dataSet = document.querySelectorAll('#dataSet')
-            dataSet.forEach(i => {
-                i.parentNode.removeChild(i)
-            })
-        }
-    })
-    checkChar()
+    if (screenWidth > 1080){
+        graphs.forEach(i => {
+            i.classList.remove(i.classList[3])
+            i.className += ' seco'
+            if (i.childNodes.length > 0){
+                i.removeChild(i.childNodes[0])
+            }
+        })
+        graphs.forEach(i => {
+            if (i.classList[1] == data.path[0].classList[1]) {
+                i.classList.remove('seco')
+                i.className += ' main'
+            }
+        })
+        checkChar()
+    }
+    else {
+        graphs.forEach(i => {
+            i.classList.remove(i.classList[2])
+            i.className += ' hide'
+            if (i.childNodes.length > 0){
+                i.removeChild(i.childNodes[0])
+            }
+        })
+        graphs.forEach(i => {
+            if (i.classList[1] == data.path[0].classList[1]) {
+                i.classList.remove('hide')
+                i.className += ' show';
+                const dataSet = document.querySelectorAll('#dataSet')
+                dataSet.forEach(i => {
+                    i.parentNode.removeChild(i)
+                })
+            }
+        })
+        checkChar()
+    }
     data.path[1].id = 'select';
 }
  

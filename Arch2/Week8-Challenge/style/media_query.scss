@@ -1,0 +1,60 @@
+@media only screen and (min-width: 768px) {
+    article canvas{
+        width: 95% !important;
+        height: 50% !important;
+    }
+}
+@media only screen and (min-width: 1080px) {
+    main.container {
+        flex-direction: row;
+        padding-right: 0;
+        & article {
+            background-color: transparent;
+            box-shadow: none;
+            &:first-child{
+                width: 100%;
+                display: flex;
+                flex-flow: row wrap;
+            }
+            & section{
+                & canvas {
+                height: 80% !important;
+                width: 90% !important;
+                }
+                &.show {
+                    width: 45%;
+                    height: 35%;
+                    order: 1;
+                    &.main {
+                        width: 50%;
+                        height: 40%;
+                        order: 0;
+                    }
+                }
+                &.info {
+                    order: 3;
+                }
+            }
+
+            &.container_UI {
+                width: 300px;
+                background-color: $seco_col;
+                border-radius: 20px 0px 0px 0px;
+                & nav ul {
+                    flex-flow: column wrap;
+                    align-items: center;
+                    gap: 20px;
+                    padding: 0px $padds;
+                    & li {
+                        background-color: $main_col;
+                        box-shadow: $shadow_b;
+                        width: 100%;
+                        & a {
+                            color: $seco_col;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
