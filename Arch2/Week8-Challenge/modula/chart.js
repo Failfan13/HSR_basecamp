@@ -54,12 +54,17 @@ export function createChartData(servData, title){
         } 
         if (i == title) {
             let title = '';
+            let servDataConvert = []
             if (i == 'temp') {
                 title = 'Temperature over time';
             } else if (i == 'humid'){
                 title = 'Humidity over time'
             } else {
-                title = 'Pressure over time'
+                title = 'Pressure / 25 over time'
+                servData[i].forEach(i => {
+                    servDataConvert.push(i/25)
+                })
+                servData[i] = servDataConvert
             }
             data.push({'title': title, 'points' : servData[i]})
             break

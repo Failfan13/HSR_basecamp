@@ -3,6 +3,7 @@ export default function dataVisuals (data, title, order) {
     const labels = ['mean', 'min', 'max', 'devi'];
     const dataBox = document.createElement('article');
     dataBox.style.order = order
+    dataBox.id = 'dataSet'
     let dataId = document.createElement('p');
     dataId.className = 'dataId';
     dataId.innerHTML = title;
