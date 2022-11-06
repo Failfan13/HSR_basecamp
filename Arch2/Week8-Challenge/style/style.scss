@@ -40,19 +40,22 @@ main {
             & article {
                 @include flex;
                 gap: 5px;
-                & p {
-                    @include dat_tuple;
-                }
             }
             & p {
                 @include dat_tuple;
                 &.node {
-                    margin: 0px 5px;
+                    order: 9;
                 }
             }
+            & .dataId {
+                background-color: $seco_col;
+                color: $main_col;
+            }
+
             & nav{
                 margin: 10px 0px;
                 flex: 1 1 100%;
+                order: 10;
                 justify-content: flex-start;
             }
             & nav ul{
