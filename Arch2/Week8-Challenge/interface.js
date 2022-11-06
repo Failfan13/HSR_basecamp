@@ -29,9 +29,15 @@ const checkChar = () => {
         } 
         let data = createChartData(dataArrs(), title)
         if (screenWidth < 1080 ){
+            const dataVisBox = document.querySelector('.info')
+            dataVisBox.childNodes.forEach(i => {
+                if (i.className == 'dataSet'){
+                    console.log(i)
+                    dataVisBox.removeChild(i)
+                }
+            })
             dataVisuals(data, title, order)
         }
-        
         createChart(i.children, data[0], data[1])
         order++
     })
