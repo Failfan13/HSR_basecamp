@@ -5,40 +5,33 @@
     color: $text_col
 }
 
+@mixin flex{
+    display: flex;
+    flex-flow: row wrap;
+}
+
 @mixin article{
     @include container;
-    @include round_out;
-    @include shadow;
-    display: flex;
+    @include flex;
+    box-shadow: $shadow_b;
+    border-radius: $border_rb;
     flex-direction: column;
     justify-content: space-between;
-    background-color: $seco_col;
+    background-color: $main_col;
     padding: 20px $padds;
     height: 100%;
 }
 
-@mixin round_out{
-    border-radius: 20px;
-}
-@mixin shadow{
-    box-shadow: 0px 0px 30px $shadow;
-}
-
-@mixin shadow_small{
-    box-shadow: inset 0px 0px 3px $shadow;
-}
-
 @mixin dat_tuple {
     @include text;
-    @include shadow_small;
-    border-radius: 10px;
-    font-size: $font_size_small;
-    padding: 2px 0px;
-    background-color: $main_col;
-    color: $text_col;
-    display: flex;
+    @include flex;
+    order: 0;
+    border-radius: $border_rs;
     justify-content: center;
-    flex: 0 1 calc(calc(100% / 3) - 5px);
+    font-size: $font_size_small;
+    padding: 3px 5px;
+    background-color: transparent;
+    border: $border $seco_col;
 }
 
 @mixin hide {
@@ -58,6 +51,44 @@
     cursor: pointer;
 }
 
-@mixin graph_small {
-    
+@mixin nav_button {
+    @include flex;
+    padding: 0;
+    gap: 10px;
+    margin: 20px 0px ($header_height /2) 0px;
+    & li {
+        @include text;
+        border-radius: $border_rs;
+        box-shadow: $shadow_s;
+        list-style: none;
+        background-color: $seco_col;
+        width: calc(calc(100% / 2) - 5px);
+        height: 50px;
+        & a {
+            @include flex;
+            text-decoration: none;
+            color: $main_col;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+@mixin canvas {
+    justify-content: center;
+    align-items: center;
+    border-radius: $border_rb;
+    box-shadow: inset $shadow_b;
+    width: 100%;
+    height: 100%;
+    background-color: $main_col;
+    margin: 0 0 $padds 0;
+}
+
+@mixin selected {
+    position: relative;
+    top: 5px;
+    box-shadow: 0px 0px;
 }
