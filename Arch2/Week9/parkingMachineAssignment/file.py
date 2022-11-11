@@ -8,7 +8,7 @@ class CarParkingMachine:
         self.parked_cars = parked_cars
 
     def check_in(self, lP: str, time: str = datetime.now().strftime("%H:%M")) -> bool or None:
-        if len(self.parked_cars) > self.capacity:
+        if len(self.parked_cars) >= self.capacity:
             return False
         else:
             self.parked_cars[lP] = ParkedCar(lP, time)
@@ -17,7 +17,7 @@ class CarParkingMachine:
         time = self.parked_cars.get(lP).checked_in.split(':')
         time = [int(time[0]) if int(time[1]) < 30 else int(time[0])+1][0]
         time = (time - datetime.now().hour)
-        return [1 if time == 0 else time][0] * self.hourly_rate
+        return [[1 if time == 0 else time][0] * self.hourly_rate if time < 24 else 24 * self.hourly_rate][0]
 
 
 class ParkedCar:
