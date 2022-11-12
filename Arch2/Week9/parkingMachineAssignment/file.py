@@ -7,18 +7,20 @@ class CarParkingMachine:
         self.hourly_rate = hourly_rate
         self.parked_cars = parked_cars
 
-    def check_in(self, lP: str, time: str = datetime.now().strftime("%H:%M")) -> bool or None:
-        if len(self.parked_cars) >= self.capacity:
+    def check_in(self, lP: str, time: str = datetime.now().strftime("%d:%H:%M")) -> bool or None:
+        if len(self.parked_cars) >= self.capacity or self.parked_cars.get(lP) != None:
             return False
         else:
             self.parked_cars[lP] = ParkedCar(lP, time)
 
     def get_parking_fee(self, lP: str) -> float:
         time = self.parked_cars.get(lP).checked_in.split(':')
-        time = [int(time[0]) if int(time[1]) < 30 else int(time[0])+1][0]
-        time = (time - datetime.now().hour)
-        return [[1 if time == 0 else time][0] * self.hourly_rate if time < 24 else 24 * self.hourly_rate][0]
-
+        time = [int(time[0]), int(time[1]) if int(time[2]) < 30 else int(time[1])+1]
+        time = [(datetime.now().hour - time[1]+1) 
+                    if time[0] == datetime.now().day else 
+                        (datetime.now().hour - time[1]+25)][0]
+        self.parked_cars.pop(lP)
+        return [self.hourly_rate if time < 1 else time*self.hourly_rate if time <= 24 else 24*self.hourly_rate][0]
 
 class ParkedCar:
     def __init__(self, lP: str, time) -> None:
@@ -29,6 +31,7 @@ class ParkedCar:
 
 if __name__ == "__main__":
     cpm = CarParkingMachine() 
+
     while True:
         inp = input('''[I] Check-in car by license plate
 [O] Check-out car by license plate
