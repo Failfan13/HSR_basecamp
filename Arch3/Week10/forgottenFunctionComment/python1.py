@@ -42,5 +42,9 @@ def temp_check(temps):
     return
 
 
+def temp_check2(temps):
+    pass
+
+
 if __name__ == "__main__":
     temp_check(temperature)
