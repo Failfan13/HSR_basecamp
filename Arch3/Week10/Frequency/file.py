@@ -11,11 +11,11 @@ def main():
         [[words.append(w) for w in re.compile('[/.?@!*]').sub('', l).split()] for l in textFile]
         for word in words:
             if word in wordDict.keys():
-                wordDict[word] += 1
+                wordDict[word.lower()] += 1
             else:
-                wordDict[word] = 1
+                wordDict[word.lower()] = 1
         
-        print(max(wordDict.values()))
+        print(wordDict)
 
 if __name__ == "__main__":
     main()
