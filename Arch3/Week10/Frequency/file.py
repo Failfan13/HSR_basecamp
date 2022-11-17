@@ -9,8 +9,13 @@ def main():
         words = []
         wordDict = dict()
         [[words.append(w) for w in re.compile('[/.?@!*]').sub('', l).split()] for l in textFile]
-        wordslist = {k:0 for k in words}
-        print(wordslist)
+        for word in words:
+            if word in wordDict.keys():
+                wordDict[word] += 1
+            else:
+                wordDict[word] = 1
+        
+        print(max(wordDict.values()))
 
 if __name__ == "__main__":
     main()
