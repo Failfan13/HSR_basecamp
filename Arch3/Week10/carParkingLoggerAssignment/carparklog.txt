@@ -1,2 +1,0 @@
-ok;cpm_name=pepega;license_plate=sb-123-a;action=check-in
-ok;cpm_name=pepega;license_plate=sb-123-c;action=check-in
