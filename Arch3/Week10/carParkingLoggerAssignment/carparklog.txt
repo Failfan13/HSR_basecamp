@@ -1,0 +1,5 @@
+20-11-2022 14:59:32;cpm_name=North;license_plate=SH-123-A;action=check-in
+20-11-2022 10:59:32;cpm_name=North;license_plate=SH-123-B;action=check-in
+2022-11-20 10:59:32.300632;cpm_name=North;license_plate=SH-123-A;action=check-out;parking_fee=2
+2022-11-20 10:59:32.300632;cpm_name=North;license_plate=SH-123-B;action=check-out;parking_fee=8.0
+20-11-2022 10:59:32;cpm_name=North;license_plate=SH-123-A;action=check-in
