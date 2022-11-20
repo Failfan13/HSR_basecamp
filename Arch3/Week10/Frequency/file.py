@@ -1,21 +1,25 @@
-import sys
-import os
-import re
+import string
 
-def main():
-    with open(os.path.join(sys.path[0], 'randomtext.txt'), 'rt') as file:
-        textFile = file.readlines()
-        file.close()
-        words = []
-        wordDict = dict()
-        [[words.append(w) for w in re.compile('[/.?@!*]').sub('', l).split()] for l in textFile]
-        for word in words:
-            if word in wordDict.keys():
-                wordDict[word.lower()] += 1
-            else:
-                wordDict[word.lower()] = 1
-        
-        print(wordDict)
+
+def main(file='randomtext.txt'):
+    try:
+        with open(file, 'rt') as fileText:
+            words = []
+            wordDict = dict()
+            [[words.append(word.translate(str.maketrans('', '', string.punctuation)).lower())
+                for word in line.split()] for line in fileText]
+            for word in words:
+                if word in wordDict.keys():
+                    wordDict[word.lower()] += 1
+                else:
+                    wordDict[word.lower()] = 1
+            highest = max(wordDict.values())
+            lowest = min(wordDict.values())
+            print(' '.join([k for k, v in wordDict.items() if v == highest]))
+            print(' '.join([k for k, v in wordDict.items() if v == lowest]))
+    except (IOError, OSError):
+        print('invlaid')
+
 
 if __name__ == "__main__":
-    main()
+    main(file=input())
