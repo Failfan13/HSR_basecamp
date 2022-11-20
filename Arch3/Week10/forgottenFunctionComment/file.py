@@ -1,26 +1,21 @@
-import os
-import sys
-
-
 def check_comment(lines: dict, fileName: str) -> str:
     textFile = ''
     for key, val in lines.items():
-        if 'def' in val.split() and lines[key-1].find('#'):
+        if 'def' in val.split() and (lines[key - 1].find('#') if key != 1 else key == 1):
             textFile += '# todo: add comment to this function \n'
         textFile += val
     return textFile
 
 
-def main():
+def main(newFile='testfile.txt', file='python1.py'):
     try:
-        with open(os.path.join(sys.path[0], 'python1.py'), 'r') as pyFile:
-            dictLine = {k+1:v for k,v in enumerate(pyFile)}
-
-        with open(os.path.join(sys.path[0], 'new.py'), 'x') as newPyFile:
+        with open(file, 'rt') as pyFile:
+            dictLine = {k + 1: v for k, v in enumerate(pyFile)}
+        with open(newFile, 'w') as newPyFile:
             newPyFile.writelines(check_comment(dictLine, pyFile.name))
-
     except (OSError, IOError):
-        print('invalid file')
+        print('invalid')
+
 
 if __name__ == "__main__":
-    main()
+    main(newFile=input(), file=input())
