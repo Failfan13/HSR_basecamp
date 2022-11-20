@@ -1,10 +1,0 @@
-09-02-2022 14:33:54;cpm_name=North;license_plate=SG-123-A;action=check-in
-09-02-2022 15:33:54;cpm_name=North;license_plate=123-SG-B;action=check-in
-09-02-2022 16:33:54;cpm_name=South;license_plate=BB-321-S;action=check-in
-09-02-2022 17:33:54;cpm_name=West;license_plate=964-HH-2;action=check-in
-09-02-2022 18:33:54;cpm_name=West;license_plate=964-HH-2;action=check-out;parking_fee=2
-09-02-2022 19:33:54;cpm_name=North;license_plate=CF-842-H;action=check-in
-09-02-2022 20:33:54;cpm_name=South;license_plate=BB-321-S;action=check-out;parking_fee=8
-09-02-2022 14:33:54;cpm_name=North;license_plate=SG-123-A;action=check-out:parking_fee=8
-20-11-2022 01:13:15;cpm_name=North;license_plate=SG-123-B;action=check-in
-20-11-2022 01:13:15;cpm_name=North;license_plate=SG-123-A;action=check-in20-11-2022 04:14:28;cpm_name=North;license_plate=SG-123-B;action=check-out;parking_fee=7.520-11-2022 04:14:28;cpm_name=North;license_plate=SG-123-A;action=check-out;parking_fee=7.5
