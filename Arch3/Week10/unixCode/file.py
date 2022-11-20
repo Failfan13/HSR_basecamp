@@ -4,15 +4,17 @@ import sys
 import os
 
 def main():
-    try: 
-        ft = open(os.path.join(sys.path[0], 'randomtext.txt'), newline='', encoding='utf8').readlines()
-    except LookupError:
-        print('invalid')
-    count = 0
-    while (count <= 10):
-        if not ft[count] in ('\r', '\n', '\r\n'):
-            print(ft[count])
-        count+=1
+    with open(os.path.join(sys.path[0], 'randomtext.txt'), 'rt') as ft:
+        ft = ft.readlines()
+    #try: 
+    #    ft = open(os.path.join(sys.path[0], 'randomtext.txt'), newline='', encoding='utf8').readlines()
+    #except (IOError, OSError):
+    #    print('invalid')
+        count = 0
+        while (count <= 10):
+            if not ft[count] in ('\r', '\n', '\r\n'):
+                print(ft[count])
+            count+=1
 
 if __name__ == "__main__":
     main()
