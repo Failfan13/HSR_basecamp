@@ -1,34 +1,30 @@
 from carparking import *
-from datetime import datetime as dt, timedelta
+from datetime import datetime, timedelta
 
-cmp = CarParkingLogger(cpm_name='North', hourly_rate=2, capacity=2)
+cmp = CarParkingMachine(capacity=2)
 
 # object
-def test_carparkingmachine() -> None:
+def test_carparkingmachine():
     assert cmp != None
 
 # Test check_in & parked_cars
 def test_check_in_capacity():
-    cmp.check_in('SH-123-A')
-    cmp.dateTime = dt.now() - timedelta(hours=4)
-    cmp.check_in('SH-123-B')
-    cmp.check_in('SH-123-C')
-    assert cmp.parked == 2
+    cmp.check_in('BB-49-JF', (datetime.now() - timedelta(hours=5, minutes=00)))
+    cmp.check_in('21-TIV-8', (datetime.now() - timedelta(hours=30, minutes=40)))
+    assert len(cmp.parked_cars) == 2
+    assert cmp.check_in('22-TId-9') == False
 
 # Test parking fee
-def test_parking_fee() -> None:
-    cmp.get_total_car_fee('SH-123-A') == 2
-    cmp.get_total_car_fee('SH-123-B') == 8
+def test_parking_fee():
+    assert cmp.get_parking_fee('BB-49-JF') == 12.5
+    assert cmp.get_parking_fee('21-TIV-8') == 60.0
 
 # Test check-out
-def test_check_out() -> None:
-    assert cmp.check_out('SH-123-A') == True
-    assert cmp.check_out('SH-123-B') == True
-    assert cmp.check_out('SH-123-C') == None
+def test_check_out():
+    assert cmp.check_out('BB-49-JF') is not False
 
 # Test al bestaand
-def test_predefined() -> None:
-    cmp.check_in('SH-123-A')
-    cmp.check_in('SH-123-A')
-    assert cmp.parked == 1
-    
+def test_predefined():
+    cmp.check_in('BB-49-JF')
+    assert cmp.check_in('BB-49-JF') == False
+    cmp.check_out('BB-49-JF')
