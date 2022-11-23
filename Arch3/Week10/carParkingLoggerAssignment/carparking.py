@@ -42,9 +42,11 @@ class ParkedCar:
 class CarParkingLogger:
     def __init__ (self, cpm_name):
         self.cpm_name = cpm_name
-        self.readFile = open('carparklog.txt', 'r')
         self.writeFile = open('carparklog.txt', 'a')
 
+    def read_file(self):
+        with open('carparklog.txt', 'r') as f:
+            return f.readlines()
 
     def check_in(self, *args):
             self.writeFile.write(f'{args[0].checked_in};cpm_name={self.cpm_name};license_plate={args[0].license_plate};action=check-in\n')
@@ -54,44 +56,33 @@ class CarParkingLogger:
             self.writeFile.write(
                 f'{args[0].checked_in};cpm_name={self.cpm_name};license_plate={args[0].license_plate};action=check-out;parking_fee={args[1]}\n')
 
-
     def check_state(self) -> dict:
         checkedIn = {}
-        with self.readFile as fileText:
-            text = list(fileText)
-            text.reverse()
-            for line in text:
-                plate = line.split(';')[2][line.split(';')[2].index('=') + 1:]
-                if ''.join(text).count(plate) % 2 != 0:
-                    if plate not in checkedIn.keys():
-                        checkedIn[plate] = ParkedCar(plate, line[:19])
+        text = self.read_file()
+        text.reverse()
+        for line in text:
+            plate = line.split(';')[2][line.split(';')[2].index('=') + 1:]
+            if ''.join(text).count(plate) % 2 != 0:
+                if plate not in checkedIn.keys():
+                    checkedIn[plate] = ParkedCar(plate, line[:19])
         return checkedIn
 
-
     def get_machine_fee_by_day(self, *args) -> float:
         fee = 0
-        with self.readFile as fileText:
-            for line in fileText:
-                if (line.split(';')[1] == f'cpm_name={args[0]}' and len(line.split(';')) > 4):
-                    fee += float(line.split(';')[4][line.split(';')[4].index('=') + 1:])
-        return fee
-
-
-    def get_machine_fee_by_day(self, *args) -> float:
-        fee = 0
-        with self.readFile as fileText:
-            for line in fileText:
-                if (line.split(';')[1] == f'cpm_name={args[0]}' and len(line.split(';')) > 4):
-                    fee += float(line.split(';')[4][line.split(';')[4].index('=') + 1:])
+        print(self.read_file())
+        #for line in self.read_file():
+        #    print(line)
+        #    if (line.split(';')[1] == f'cpm_name={args[0]}' and len(line.split(';')) > 4):
+        #        fee += float(line.split(';')[4][line.split(';')[4].index('=') + 1:])
         return fee
     
     
     def get_total_car_fee(self, license_plate):
         fee = 0
-        with self.readFile as fileText:
-            for line in fileText:
-                if line.find(license_plate) >= 0 and len(line.split(';')) > 4:
-                    fee += float(line.split(';')[4][line.split(';')[4].index('=') + 1:])
+
+        for line in self.read_file():
+            if line.find(license_plate) >= 0 and len(line.split(';')) > 4:
+                fee += float(line.split(';')[4][line.split(';')[4].index('=') + 1:])
         return fee
 
 
