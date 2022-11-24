@@ -1,9 +1,3 @@
-22-11-2022 09:49:41;cpm_name=0123796423643512323;license_plate=KKK;action=check-in
-22-11-2022 09:49:41;cpm_name=0123796423643512323;license_plate=KKK;action=check-out;parking_fee=37.2
-23-11-2022 15:49:41;cpm_name=0123796423643512323;license_plate=KKK;action=check-in
-23-11-2022 15:49:41;cpm_name=0123796423643512323;license_plate=KKK;action=check-out;parking_fee=1.55
-23-11-2022 15:49:41;cpm_name=0123796423643512323;license_plate=JJJ;action=check-in
-23-11-2022 15:49:41;cpm_name=0123796423643512323;license_plate=JJJ;action=check-out;parking_fee=1.55
-23-11-2022 15:49:41;cpm_name=0123796423643512323;license_plate=LLL;action=check-in
-23-11-2022 15:49:41;cpm_name=0123796423643512323;license_plate=LLL;action=check-out;parking_fee=1.55
-23-11-2022 15:49:41;cpm_name=0123796423643512323;license_plate=MMM;action=check-in
+2022-11-24 14:37:21;cpm_name=cpm_1;license_plate=RRR;action=check-in
+2022-11-24 14:37:21;cpm_name=cpm_1;license_plate=TTT;action=check-in
+2022-11-24 14:37:21;cpm_name=cpm_1;license_plate=TTT;action=check-out;parking_fee=2.5
