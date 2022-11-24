@@ -1,3 +1,2 @@
-2022-11-24 14:37:21;cpm_name=cpm_1;license_plate=RRR;action=check-in
-2022-11-24 14:37:21;cpm_name=cpm_1;license_plate=TTT;action=check-in
-2022-11-24 14:37:21;cpm_name=cpm_1;license_plate=TTT;action=check-out;parking_fee=2.5
+2022-11-24 15:39:18;cpm_name=North;license_plate=BB-49-JF;action=check-in
+2022-11-24 15:39:18;cpm_name=North;license_plate=21-TIV-8;action=check-in

@@ -39,8 +39,6 @@ class ParkedCar:
         self.license_plate = license_plate
         self.check_in = dt.strptime(str(time), "%Y-%m-%d %H:%M:%S")
 
-
-
 class CarParkingLogger:
     def __init__ (self, cpm_name):
         self.cpm_name = cpm_name

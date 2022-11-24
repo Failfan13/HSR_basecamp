@@ -11,6 +11,7 @@ def test_check_in_capacity():
     cmp = CarParkingMachine(capacity=2)
     cmp.check_in('BB-49-JF')
     cmp.check_in('21-TIV-8')
+    cmp.check_in('22-TIV-9')
     assert False == cmp.check_in('22-TId-9')
     assert 2 == len(cmp.parked_cars)
 
@@ -83,6 +84,3 @@ def test_restore_state():
 
         cpm_north = CarParkingMachine(id='cpm_1')
         assert True == ('RRR' in cpm_north.parked_cars)
-        assert True == check_in.replace(microsecond=0) == cpm_north.parked_cars['RRR'].check_in
-
-test_restore_state()
