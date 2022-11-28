@@ -1,3 +1,3 @@
-from loadFile import loadFile as lF
+from serverSide import getData as lF
 
 print(lF())
