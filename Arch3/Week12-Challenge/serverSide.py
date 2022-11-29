@@ -1,6 +1,6 @@
 import requests
 
-# Get data from server with assigned key
+# Load data from server with arguments to allocate different types of info
 def dataLoader(get:str = 'team', symbol:str = '', history:str = ''):
     key = 'CxYTaRbXzO6x5B58'
     stdUrl = 'https://api.basecampcrypto.nl/v1/'
@@ -10,8 +10,7 @@ def dataLoader(get:str = 'team', symbol:str = '', history:str = ''):
         history = '/history'
     try:
         url = f"{stdUrl}{get}{symbol}{history}?key={key}"
-
     except ConnectionError:
-        print('invalid')
+        return 'invalid'
     r = requests.get(url)
     return r.json()
