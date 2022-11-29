@@ -1,3 +1,3 @@
-from serverSide import getData as lF
+from serverSide import dataLoader as datLoad
 
-print(lF())
+print(datLoad())
