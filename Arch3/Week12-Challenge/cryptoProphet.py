@@ -2,5 +2,11 @@ from serverSide import dataLoader as datLoad
 from modula import *
 import tabulate as table
 
-print(calculateCoin().coins)
-calculateCoin().average()
+
+def main():
+    coinCal = calculateCoin()
+    print(coinCal.up_down('DUB'))
+
+
+if __name__ == "__main__":
+    main()
