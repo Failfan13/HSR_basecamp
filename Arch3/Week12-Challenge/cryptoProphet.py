@@ -1,3 +1,6 @@
 from serverSide import dataLoader as datLoad
+from modula import *
+import tabulate as table
 
-print(datLoad())
+print(calculateCoin().coins)
+calculateCoin().average()
