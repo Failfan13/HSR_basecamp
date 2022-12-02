@@ -1,3 +1,4 @@
+from serverEx.serverSide import dataLoader
 from modules.modula import *
 from tabulate import tabulate as table
 
@@ -15,12 +16,12 @@ def createTable(obj: object):
             else:
                 valList.append(value)
         table_data.append(valList)
-    print(table(table_data, headers='firstrow', tablefmt='fancy_grid'))
+    print(table(table_data, headers='firstrow', tablefmt='fancy_grid', floatfmt=".2f"))
 
 
 def main():
     cC = calculateCoin()
-    createTable(cC)
+    #createTable(cC)
 
 
 if __name__ == "__main__":

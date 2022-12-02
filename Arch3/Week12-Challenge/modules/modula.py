@@ -14,19 +14,19 @@ class calculateCoin():
     def avg(self, coin:str = 'ALB') -> float:
         history = self.history.get(coin).get('history')
         coinTot = sum(x.get('value') for x in history)
-        return round(coinTot / len(history), 2)
+        return coinTot / len(history)
 
     # calculate Min & Max
     def min_max(self, coin:str = 'ALB') -> tuple:
         history = self.history.get(coin).get('history')
         coinHis = [x.get('value') for x in history]
-        return round(min(coinHis), 2), round(max(coinHis), 2)
+        return min(coinHis), max(coinHis)
 
     # calculate standard deviation
     def stdDev(self, coin:str = 'ALB') -> float:
         history = self.history.get(coin).get('history')
         coinHis = [x.get('value') for x in history]
-        return round(stat.stdev(coinHis), 2)
+        return stat.stdev(coinHis)
 
     # Calculate median from q2 and total history in q1 and q3
     def qrtsYear(self, coin:str = 'ALB') -> tuple:
@@ -34,13 +34,13 @@ class calculateCoin():
         coinHis = [x.get('value') for x in history[90:181]]
         q3, q1 = np.percentile(coinHis, [75 ,25])
         coinHisQ2 = [x.get('value') for x in history[90:181]]
-        return round(float(q1), 2), round(stat.median(coinHisQ2), 2), round(float(q3), 2)
+        return float(q1), stat.median(coinHisQ2), float(q3)
 
     # calculate lagest difference between ups and downs
     def range(self, coin:str = 'ALB') -> float:
         history = self.history.get(coin).get('history')
         coinHis = [x.get('value') for x in history]
-        return round((max(coinHis) - min(coinHis)), 2)
+        return (max(coinHis) - min(coinHis))
 
     # calculate average down up range
     def inQuRa(self, coin:str = 'ALB') -> float:
@@ -48,7 +48,7 @@ class calculateCoin():
         coinHis = [x.get('value') for x in history]
         coinHis.sort()
         q3, q1 = np.percentile(coinHis, [75 ,25])
-        return round(float((q3 - q1)), 2)
+        return float((q3 - q1))
 
     # calculate amount of ups and downs in history coin
     def upDown(self, coin:str = 'ALB') -> tuple:
@@ -69,4 +69,4 @@ class calculateCoin():
                     countDown += 1
                     if countDown > lDwns:
                         lDwns += 1
-        return round(ups, 2), round(downs, 2), round(lUps, 2), round(lDwns, 2)
+        return ups, downs, lUps, lDwns
