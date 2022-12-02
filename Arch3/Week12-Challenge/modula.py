@@ -7,41 +7,41 @@ class calculateCoin():
         self.coins = [data.get('symbol') for data in datLoad('coin')]
         self.history = {c:datLoad(get='coin', symbol=c, history='ok') for c in self.coins}
         
-    def avg(self, coin:str = 'ALB') -> str:
+    def avg(self, coin:str = 'ALB') -> float:
         history = self.history.get(coin).get('history')
         coinTot = sum(x.get('value') for x in history)
-        return coinTot / len(history)
+        return round(coinTot / len(history), 2)
 
-    def min_max(self, coin:str = 'ALB') -> str:
+    def min_max(self, coin:str = 'ALB') -> tuple:
         history = self.history.get(coin).get('history')
         coinHis = [x.get('value') for x in history]
-        return min(coinHis), max(coinHis)
+        return round(min(coinHis), 2), round(max(coinHis), 2)
 
-    def std_dev(self, coin:str = 'ALB') -> str:
+    def stdDev(self, coin:str = 'ALB') -> float:
         history = self.history.get(coin).get('history')
         coinHis = [x.get('value') for x in history]
-        return stat.stdev(coinHis)
+        return round(stat.stdev(coinHis), 2)
 
-    def qrtsYear(self, coin:str = 'ALB') -> str:
+    def qrtsYear(self, coin:str = 'ALB') -> tuple:
         history = self.history.get(coin).get('history')
         coinHis = [x.get('value') for x in history[90:181]]
         q3, q1 = np.percentile(coinHis, [75 ,25])
         coinHisQ2 = [x.get('value') for x in history[90:181]]
-        return q1, stat.median(coinHisQ2), q3
+        return round(float(q1), 2), round(stat.median(coinHisQ2), 2), round(float(q3), 2)
 
-    def range(self, coin:str = 'ALB') -> str:
+    def range(self, coin:str = 'ALB') -> float:
         history = self.history.get(coin).get('history')
         coinHis = [x.get('value') for x in history]
-        return (max(coinHis) - min(coinHis))
+        return round((max(coinHis) - min(coinHis)), 2)
 
-    def inQuRa(self, coin:str = 'ALB') -> str:
+    def inQuRa(self, coin:str = 'ALB') -> float:
         history = self.history.get(coin).get('history')
         coinHis = [x.get('value') for x in history]
         coinHis.sort()
         q3, q1 = np.percentile(coinHis, [75 ,25])
-        return (q3 - q1)
+        return round(float((q3 - q1)), 2)
 
-    def up_down(self, coin:str = 'ALB') -> str:
+    def upDown(self, coin:str = 'ALB') -> tuple:
         ups = downs = lUps = lDwns = countDown = countUp = 0
         history = self.history.get(coin).get('history')
         coinHis = [x.get('value') for x in history]
@@ -59,5 +59,4 @@ class calculateCoin():
                     countDown += 1
                     if countDown > lDwns:
                         lDwns += 1
-                
-        return ups, downs, lUps, lDwns
+        return round(ups, 2), round(downs, 2), round(lUps, 2), round(lDwns, 2)
