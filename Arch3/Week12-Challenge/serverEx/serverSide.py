@@ -1,6 +1,6 @@
 import requests
 
-# Load data from server with arguments to allocate different types of info
+# Load data from basecamp API : return dictionary with requested data
 def dataLoader(get:str = 'team', symbol:str = '', history:str = ''):
     key = 'CxYTaRbXzO6x5B58'
     stdUrl = 'https://api.basecampcrypto.nl/v1/'

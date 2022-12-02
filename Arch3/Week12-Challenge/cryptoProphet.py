@@ -1,7 +1,8 @@
-from modula import *
+from modules.modula import *
 from tabulate import tabulate as table
 
-def createTable(obj:object):
+
+def createTable(obj: object):
     obj.methodList = [obj.avg, obj.min_max, obj.stdDev, obj.qrtsYear, obj.range, obj.inQuRa, obj.upDown]
     table_data = [["", "AVG", "MIN", "MAX", "SD", "Q1", "Q2", "Q3", 
                     "RNG", "IQR", "UPS", "DOWNS", "LUP", "LDWN"]]
