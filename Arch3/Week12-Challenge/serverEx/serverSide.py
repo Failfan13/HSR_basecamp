@@ -21,17 +21,32 @@ def dataLoader(get:str = 'team', symbol:str = '', history:str = ''):
     except requests.exceptions.HTTPError as err:
         # data sub folder or not
         try:
-            with open(os.path.join(sys.path[0], "../crypto_daily_prices_365.csv"), mode="rU") as cryptData:
+            with open(os.path.join(sys.path[0], "../crypto_daily_prices_365.csv"), mode="r") as cryptData:
                 cryptData = [row.replace(';', ',') for row in cryptData.readlines()]
                 dictCrypt = csv.DictReader(cryptData)
-        except (IOError, OSError):
-            with open(os.path.join(sys.path[0], "crypto_daily_prices_365.csv"), mode="rU") as cryptData:
+        except FileNotFoundError:
+            with open(os.path.join(sys.path[0], "crypto_daily_prices_365.csv"), mode="r") as cryptData:
                 cryptData = [row.replace(';', ',') for row in cryptData.readlines()]
                 dictCrypt = csv.DictReader(cryptData)
-        data = {
-                'name': list(filter(lambda x: symbol in x.upper(), next(dictCrypt).keys()))[0],
-                'symbol': symbol,
-                }
-        if not history == '':
-            data['history'] = [{'day': dic.get('0'), 'value': dic.get(data['name'])} for dic in dictCrypt]
+        data = []
+        # for every coin in header of csv file
+        for key in dictCrypt.fieldnames:
+            if not key.isnumeric():
+                # if symbol is none or has value
+                if symbol == '':
+                    dataVal = {
+                            'name': key,
+                            'symbol': key[:3].upper(),
+                            }
+                    if not history == '':
+                        dataVal['history'] = [{'day': dic.get('0'), 'value': dic.get(dataVal['name'])} for dic in dictCrypt]
+                    data.append(dataVal)
+                elif key.upper().find(symbol[1:]) >= 0:
+                    dataVal = {
+                            'name': key,
+                            'symbol': key[:3].upper(),
+                            }               
+                    if not history == '':
+                        dataVal['history'] = [{'day': dic.get('0'), 'value': dic.get(dataVal['name'])} for dic in dictCrypt]
+                    data.append(dataVal)
     return data

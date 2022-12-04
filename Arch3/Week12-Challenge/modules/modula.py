@@ -1,8 +1,9 @@
 from serverEx.serverSide import dataLoader as datLoad
+import matplotlib.pyplot as plt
 import statistics as stat
 import numpy as np
 
-class calculateCoin():
+class CalculateCoin():
     # initialiser
     def __init__(self) -> None:
         # list of all coins ['ALB', 'BHA' etc.
@@ -70,3 +71,40 @@ class calculateCoin():
                     if countDown > lDwns:
                         lDwns += 1
         return ups, downs, lUps, lDwns
+
+
+class CreateGraph():
+    def __init__(self):
+        # list of all coins ['ALB', 'BHA' etc.
+        self.coins = [data.get('symbol') for data in datLoad('coin')]
+        # history of the coins above
+        self.history = {c:datLoad(get='coin', symbol=c, history='ok') for c in self.coins}
+
+    # shows price each day
+    def linePlot(self, coin:str = 'ALB'):
+        values = np.array([dic.get('value') for dic in self.history.get(coin).get('history')])
+        plt.plot(values, linewidth=2.0)
+        plt.show()
+    
+    # average of all prices
+    def boxPlot(self, coin:str = 'ALB'):
+        np.random.seed(10)
+        data = tuple([dic.get('value') for dic in self.history.get(coin).get('history')])
+        dataBox = np.random.normal(data)
+        plt.boxplot(dataBox)
+        plt.show()
+    
+    # Show around what price range most
+    def histogramPlot(self, coin:str = 'ALB'):
+        np.random.seed(1)
+        data = tuple([dic.get('value') for dic in self.history.get(coin).get('history')])
+        dataHist = 4 + np.random.normal(data)
+        plt.hist(dataHist, len(data), linewidth=0.1, edgecolor="white")
+        plt.show()
+
+    # shows line plot but more accurate
+    def stepPlot(self, coin:str = 'ALB'):
+        values = np.array([dic.get('value') for dic in self.history.get(coin).get('history')])
+        days = np.array([dic.get('day') for dic in self.history.get(coin).get('history')])
+        plt.step(days, values, linewidth=2.0)
+        plt.show()

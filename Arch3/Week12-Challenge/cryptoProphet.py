@@ -18,7 +18,7 @@ def createTable(obj: object) -> None:
     print(table(table_data, headers='firstrow', tablefmt='fancy_grid', floatfmt=".2f"))
 
 
-def calcInvestment(obj: object):
+def calcInvestment(obj: object) -> None:
     investors = {
         'alice': {
             'ivIn': 'ALB',
@@ -63,7 +63,6 @@ def calcInvestment(obj: object):
             'SELL': lambda x: [v for ind, v in enumerate(x) if ind > 0 and (v / 100 * 120) > x[ind-1]]
         }
     }
-    # print(investors.keys())
     for char in investors.keys():
         history = [val.get('value') for val in obj.history.get(investors.get(char).get('ivIn')).get('history')]
         for ind, value in enumerate(history):
@@ -76,23 +75,43 @@ def calcInvestment(obj: object):
             if ind == 364 and investors.get(char).get('STOCK') > 0:
                 investors[char]['EURO'] = investors.get(char).get('EURO') + (investors.get(char).get('STOCK') * value)
                 investors[char]['STOCK'] = 0
+    for investor in investors.keys():
+        print(investors[investor]['EURO'])
 
 
-    print(investors['alice']['EURO'])
-    print(investors['bob']['EURO'])
-    print(investors['carol']['EURO'])
-    print(investors['dave']['EURO'])
-    print(investors['eve']['EURO'])
-    print(investors['frank']['EURO'])
-
-
-            
-    # print(investors['carol']['SELL']())
+def graphsHistory(obj: object):
+    obj.methodList = [obj.linePlot, obj.boxPlot, obj.histogramPlot, obj.stepPlot]
+    inp = input("Give a coin symbol name 'BHA' or type 'all'").upper()
+    if inp in obj.coins:
+        for method in obj.methodList:
+            method(inp)
+    elif inp == 'ALL':
+        for coin in obj.coins:
+            for method in obj.methodList:
+                method(coin)
+    else:
+        print('invalid')
 
 
 def main():
-    cC = calculateCoin()
-    calcInvestment(cC)
+    cC = CalculateCoin()
+    cG = CreateGraph()
+    while True:
+        inp = input("""[T] Table of data
+[C] Investors
+[G] Graphs
+[Q] Quit program""").upper()
+        if inp == 'T':
+            createTable(cC)
+        elif inp == 'C':
+            calcInvestment(cC)
+        elif inp == 'G':
+            graphsHistory(cG)
+        elif inp == 'Q':
+            break
+        else:
+            print('invalid')
+
 
 
 if __name__ == "__main__":
