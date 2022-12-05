@@ -1,7 +1,8 @@
+# Imports
 from modules.modula import *
 from tabulate import tabulate as table
 
-
+# Create and fill table with data
 def createTable(obj: object) -> None:
     obj.methodList = [obj.avg, obj.min_max, obj.stdDev, obj.qrtsYear, obj.range, obj.inQuRa, obj.upDown]
     table_data = [["", "AVG", "MIN", "MAX", "SD", "Q1", "Q2", "Q3", 
@@ -17,7 +18,7 @@ def createTable(obj: object) -> None:
         table_data.append(valList)
     print(table(table_data, headers='firstrow', tablefmt='fancy_grid', floatfmt=".2f"))
 
-
+# Calculate investors
 def calcInvestment(obj: object) -> None:
     investors = {
         'alice': {
@@ -78,7 +79,7 @@ def calcInvestment(obj: object) -> None:
     for investor in investors.keys():
         print(investors[investor]['EURO'])
 
-
+# Create graph for each coin
 def graphsHistory(obj: object):
     obj.methodList = [obj.linePlot, obj.boxPlot, obj.histogramPlot, obj.stepPlot]
     inp = input("Give a coin symbol name 'BHA' or type 'all'").upper()
@@ -92,7 +93,7 @@ def graphsHistory(obj: object):
     else:
         print('invalid')
 
-
+# Menu with call functions
 def main():
     cC = CalculateCoin()
     cG = CreateGraph()
@@ -111,8 +112,6 @@ def main():
             break
         else:
             print('invalid')
-
-
-
+# If main
 if __name__ == "__main__":
     main()
