@@ -1,0 +1,2 @@
+09-12-2022 18:24:59;cpm_name=North;license_plate=45-DEF-6;action=check-in
+09-12-2022 21:24:59;cpm_name=North;license_plate=45-DEF-6;action=check-out;parking_fee=2.5

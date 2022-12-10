@@ -11,7 +11,7 @@ class CarParkingMachine:
         self.parked_cars = self.logger.check_state()
 
     def check_in(self, license_plate: str, check_in: str = dt.now()) -> None:
-        if not valueInAnyJson(license_plate):
+        if not valueInAnyJson(license_plate) and len(self.parked_cars) < self.capacity:
             self.parked_cars[license_plate] = ParkedCar(license_plate, check_in.strftime('%d-%m-%Y %H:%M:%S'))
             self.logger.checker(self.parked_cars[license_plate], self.parked_cars)
             return True
@@ -41,7 +41,7 @@ class ParkedCar:
 class CarParkingLogger:
     def __init__ (self, cpm_name):
         self.cpm_name = cpm_name
-        self.cpm_id = f'parking-machine-{self.cpm_name.lower()}'
+        self.cpm_id = f'{self.cpm_name}_state'
 
     def checker(self, parkedCar:object, parked_cars:list, check:str='in', fee:float=0):
         line = f'{parkedCar.checked_in};cpm_name={self.cpm_name};license_plate={parkedCar.license_plate};action=check'
@@ -91,51 +91,40 @@ def calcFee(type:str, license_plate:str, cpm_name:str='') -> float:
 
 
 def valueInAnyJson(value:str) -> bool:
-    for file in os.listdir(sys.path[0]):
-        if file.endswith('.json'):
-            with open(os.path.join(sys.path[0], file), mode='r') as f:
-                try:
-                    data = json.load(f)
-                    if value in tuple([v for d in data for v in d.values()]):
-                        return True
-                except json.decoder.JSONDecodeError:
-                    pass
+    try:
+        for file in os.listdir(sys.path[0]):
+                if file.endswith('.json'):
+                    with open(os.path.join(sys.path[0], file), mode='r') as f:
+                        try:
+                            data = json.load(f)
+                            if value in tuple([v for d in data for v in d.values()]):
+                                return True
+                        except json.decoder.JSONDecodeError:
+                            pass
+    except FileNotFoundError:
+        pass
     return False
 
 
 if __name__ == "__main__":
     cpm = CarParkingMachine()
-    cpm.check_in('45-DEF-6', (dt.now() - timedelta(hours=5, minutes=00)))
-    cpm.check_in('45-DEF-5', (dt.now() - timedelta(hours=30, minutes=00)))
-    cpm.check_in('45-DEF-7', (dt.now() - timedelta(hours=30, minutes=00)))
-    cpm.check_in('45-DEF-8', (dt.now() - timedelta(hours=30, minutes=00)))
-    cpm.check_in('45-DEF-2', (dt.now() - timedelta(hours=50, minutes=00)))
-    cpm.check_in('45-DEF-3')
-    cpm2 = CarParkingMachine(id='South')
-    cpm.check_out('45-DEF-6')
-    cpm2.check_in('45-DEF-4')
-    cpm2.check_out('45-DEF-4')
-    cpm2.check_in('45-DEF-9', (dt.now() - timedelta(hours=30, minutes=00)))
-    cpm2.check_in('45-DEF-10', (dt.now() - timedelta(hours=30, minutes=00)))
-
-#     while True:
-#         cpm = CarParkingMachine()
-#         inp = input('''[I] Check-in car by license plate
-# [O] Check-out car by license plate
-# [Q] Quit program''').upper()
-
-#         if inp == 'I':
-#             inp = input().upper()
-#             if cpm.check_in(inp) is not False:
-#                 print('License registered')
-#             else:
-#                 print('Capacity reached!')
-#         elif inp == 'O':
-#             inp = input().upper()
-#             outp = cpm.check_out(inp)
-#             if outp is not None:
-#                 print(f'Parking fee: {outp:.2f} EUR')
-#             else:
-#                 print(f'License {inp} not found!')
-#         elif inp == 'Q':
-#             break
+    while True:
+        cpm = CarParkingMachine()
+        inp = input('''[I] Check-in car by license plate
+[O] Check-out car by license plate
+[Q] Quit program''').upper()
+        if inp == 'I':
+            inp = input().upper()
+            if cpm.check_in(inp) is not False:
+                print('License registered')
+            else:
+                print('Capacity reached!')
+        elif inp == 'O':
+            inp = input().upper()
+            outp = cpm.check_out(inp)
+            if outp is not None:
+                print(f'Parking fee: {outp:.2f} EUR')
+            else:
+                print(f'License {inp} not found!')
+        elif inp == 'Q':
+            break
