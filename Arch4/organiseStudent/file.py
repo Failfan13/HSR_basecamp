@@ -38,33 +38,35 @@ class studentOrganiser():
                     WHERE studentnumber = "{stuData.get('studentnumber')}"'''
             )
         else:
-            print(f"invalid student: {stuData.get('studentnumber')}")
+            print(f"Could not find student with number: {stuData.get('studentnumber')}")
 
     def listStudents(self, classRoom='all') -> None:
         if classRoom == 'all':
-            stuData = {'class': 'TRUE', 'order': 'class DESC'}
+            stuData = {'class': '', 'order': 'class DESC'}
         else:
             stuData = dictQuestions(["class"])
-            stuData['class'] = 'class = "{}"'.format(stuData.get('class'))
+            stuData['class'] = 'WHERE class = "{}"'.format(stuData.get('class'))
             stuData['order'] = 'studentnumber ASC'
         cur = self.sqlCon.cursor()
         cur.execute(
             f'''SELECT * FROM students
-                WHERE {stuData.get('class')}
+                {stuData.get('class')}
                 ORDER BY {stuData.get('order')}'''
         )
-        print(cur.fetchall())
+        for stu in cur.fetchall():
+            print(stu)
 
     def searchStudent(self) -> None:
-        stuData = dictQuestions(['first_name', 'last_name_or_city'])
+        stuData = dictQuestions(['fn_or_ln_or_city'])
         cur = self.sqlCon.cursor()
         cur.execute(
             f'''SELECT * FROM students
-                WHERE first_name = "{stuData.get('first_name')}" 
-                    AND last_name = "{stuData.get('last_name_or_city')}" 
-                    OR city = "{stuData.get('last_name_or_city')}"'''
+                WHERE first_name = "{stuData.get('fn_or_ln_or_city')}" 
+                    OR last_name = "{stuData.get('fn_or_ln_or_city')}" 
+                    OR city = "{stuData.get('fn_or_ln_or_city')}"'''
         )
-        print(cur.fetchone())
+        for stu in cur.fetchall():
+            print(stu)
 
 
 def dictQuestions(questions:list) -> dict:
@@ -96,7 +98,7 @@ def main():
     while True:
         inp = input(menuStructure.__doc__).upper()
         if inp == 'A':
-            stuOrg.newStudent()
+            print(stuOrg.newStudent())
         elif inp == 'C':
             stuOrg.assignStudent()
         elif inp == 'D':
