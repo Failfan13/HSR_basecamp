@@ -1,60 +1,75 @@
 import sys
 import os
-import json
-import math
 import sqlite3 as sql
 from datetime import datetime as dt, timedelta
+from syncDb import syncJsonDb
 
 
 class bookStoreAp():
     def __init__ (self, connection:sql.Connection):
         self.con = connection
+        self.date = dt.now()
 
     def borrowBook(self):
         question = askQuestion(['id_or_isbn', 'duration'])
-        # check if status is availible based on title or isbn
-        # return date until = current date + timedelta "question" duration
+        self.con.execute(
+            f'''SELECT id, title, isbn, status
+                FROM books
+                WHERE id= "{question.get('id_or_isbn')} AND status = "AVAILABLE" 
+                    OR isbn = "{question.get('id_or_isbn')}" AND status = "AVAILABLE" 
+                    '''
+        )
+        dataOneRow = self.con.fetchone()
+        if dataOneRow:
+            returnDate = self.date.date() + timedelta(days=int(question.get('duration')))
+            self.con.execute(
+                '''UPDATE books
+                    SET status = "BORROWED", return_date = "{}"
+                    WHERE id = "{}"'''.format(returnDate, dataOneRow[0])
+            )
+            return returnDate
+        else:
+            return 'Book has been borrowed or is not available'
 
-    def returnBook(self):
+    def returnBook(self, fee=0.5):
         question = askQuestion(['id_or_isbn'])
-        # fine if returned later return_date (0.5eu per day)
+        self.con.execute(
+            '''SELECT id, return_date
+                FROM books
+                WHERE id = "{}" AND status = "BORROWED" 
+                    OR isbn = {} AND status = "BORROWED"
+                '''.format(question.get('id_or_isbn'), question.get('id_or_isbn'))
+        )
+        dataOneRow = self.con.fetchone()
+        if dataOneRow:
+            self.con.execute(
+                    '''UPDATE books
+                        SET status = "AVAILABLE", return_date = "NULL"
+                        WHERE id = "{}"
+                        '''.format(dataOneRow[0])
+                )
+            overDue = (self.date - dt.strptime(dataOneRow[1], "%Y-%m-%d")).days
+            if overDue > 0:
+                return overDue * fee
+            else:
+                return 'Returned in time'
+        else:
+            return 'This book has not been borrowed'
 
     def searchBook(self):
         question = askQuestion(['searchterm']) # can be title, isbn or author
-        # return book info + status_information (can be AVAILIBLE or BORROWED)
+        self.con.execute(
+            '''SELECT isbn, title, pages, year, status
+                FROM books
+                WHERE title = "{}" OR isbn = "{}" OR author = "{}"
+                '''.format(question.get('searchterm'), 
+                    question.get('searchterm'), question.get('searchterm'))
+        )
+        return self.con.fetchone()
 
 # Question to be asked the user
 def askQuestion(lstQuest:list):
     return {q: input(q) for q in lstQuest}
-
-# Load existing from json if there is any
-def readJson():
-    try:
-        with open(os.path.join(sys.path[0], 'books.json'), mode='r') as jsonFile:
-            data = json.load(jsonFile)
-            return data
-    except FileNotFoundError:
-        return []
-
-# Create a sql execution to insert all values from JSON
-def syncJsonDb(connection:sql.Connection):
-    jsonData = readJson()
-    sqlData = ''
-    insInto = ''
-    for jdict in jsonData:
-        if 'status' in jdict.keys():
-            insInto = '(isbn, title, authors, pages, year, status, return_date)'
-        else:
-            insInto = '(isbn, title, authors, pages, year)'
-        sqlData += f'{tuple(jdict.values())}, '
-    try:
-        connection.execute(
-            f'''INSERT INTO books {insInto}
-                VALUES {sqlData[:-2]};'''
-        )
-    except json.decoder.JSONDecodeError:
-        return 'empty file or invalid fields'
-
 
 def menuStructure():
     """[B] Borrow book
@@ -70,33 +85,30 @@ def main():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             isbn TEXT NOT NULL,
             title TEXT NOT NULL,
-            authors TEXT NOT NULL,
+            author TEXT NOT NULL,
             pages INTEGER NOT NULL,
             year TEXT NOT NULL,
             status TEXT DEFAULT "AVAILABLE",
-            return_date DATE DEFAULT NULL
+            return_date DATE DEFAULT NULL,
+            UNIQUE(title, isbn)
         )'''
     )
     con = connect.cursor()
     syncJsonDb(con)
     bs = bookStoreAp(con)
-    bs.borrowBook()
+    while True:
+        inp = input(menuStructure.__doc__).upper()
+        if inp == 'B':
+            bs.borrowBook()
+        elif inp == 'R':
+            bs.returnBook()
+        elif inp == 'S':
+            bs.searchBook()
+        elif inp == 'Q':
+            break
+        else:
+            print('invalid')
     connect.commit()
-    # bookStore = bookStoreAp(connect)
-    # bookStore.borrowBook()
-    # connect.commit()
-    # while True:
-    #     inp = input(menuStructure.__doc__).upper()
-    #     if inp == 'B':
-    #         borrowBook()
-    #     elif inp == 'R':
-    #         ...
-    #     elif inp == 'S':
-    #         ...
-    #     elif inp == 'Q':
-    #         break
-    #     else:
-    #         print('invalid')
 
 if __name__ == "__main__":
     main()
