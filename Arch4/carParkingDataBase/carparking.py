@@ -4,7 +4,7 @@ import sqlite3 as sql
 from datetime import datetime as dt, timedelta
 
 class CarParkingMachine:
-    def __init__(self, id='North', capacity: int = 10, hourly_rate: float = 2.5):
+    def __init__(self, id='North', capacity: int = 10, hourly_rate: float = 2.5) -> None:
         self.capacity = capacity
         self.hourly_rate = hourly_rate
         self.cpm_name = id
@@ -19,15 +19,17 @@ class CarParkingMachine:
                 parking_fee NUMERIC DEFAULT 0 
             );"""
         )
-        self.parked_cars = {}
+        self.parked_cars = restoreState(self.db_con, self.cpm_name)
 
-    def check_in(self, license_plate: str, check_in: str = dt.now()) -> None:
+    # Checkin / Insert new car
+    def check_in(self, license_plate: str, check_in: str = dt.now() - timedelta(days=3)) -> None:
         if len(self.parked_cars) < self.capacity and self.find_last_checkin(license_plate) == True:
             parkedInsert = self.insert(ParkedCar(license_plate, check_in.strftime('%d-%m-%Y %H:%M:%S')))
             self.parked_cars[license_plate] = parkedInsert
             return True
         return False
 
+    # Checkout / Update existing car
     def check_out(self, license_plate: str) -> bool or None:
         if license_plate in self.parked_cars.keys():
             parkedObj = self.parked_cars[license_plate]
@@ -38,6 +40,7 @@ class CarParkingMachine:
             self.parked_cars.pop(license_plate)
             return fee
 
+    # Calculate parking fee
     def get_parking_fee(self, license_plate: str) -> float:
         if license_plate in self.parked_cars.keys():
             time = -(dt.strptime(self.parked_cars.get(license_plate).check_in, '%d-%m-%Y %H:%M:%S') -
@@ -45,6 +48,7 @@ class CarParkingMachine:
             return self.hourly_rate * (24 if time > 24 else time if time > 1 else 1)
         return False
 
+    # Find car by calling id
     def find_by_id(self, id) -> object:
         parkedCar = self.db_con.execute(
             f'''SELECT license_plate, check_in
@@ -53,6 +57,7 @@ class CarParkingMachine:
         )
         return ParkedCar(*parkedCar.fetchone())
 
+    # Find last not checked out car
     def find_last_checkin(self, license_plate:str) -> object or bool:
         lastInstance = self.db_con.execute(
             f'''SELECT license_plate, check_in
@@ -64,6 +69,7 @@ class CarParkingMachine:
             return ParkedCar(*lastInstance)
         return True
     
+    # Insert new parked car into database
     def insert(self, parked_car:object) -> object:
         self.db_con.execute(
             '''INSERT INTO parkings ('car_parking_machine', 'license_plate', 
@@ -86,6 +92,7 @@ class CarParkingMachine:
         parkedCar.id = fetchObj[0]
         return parkedCar
 
+    # update existing ID in database
     def update(self, parked_car:object) -> None:
         self.db_con.execute(
                 '''UPDATE parkings
@@ -96,6 +103,7 @@ class CarParkingMachine:
             )
         self.db_con.commit()
 
+#Create ParkedCar Objects
 class ParkedCar:
     def __init__(self, license_plate:str, time_in:str, time_out:str='ok', 
             id:int=0, parking_fee:float=0) -> None:
@@ -105,15 +113,17 @@ class ParkedCar:
         self.check_out = time_out
         self.parking_fee = parking_fee
 
-
-def loadFromDb():
-    ...
-    # load non checkout instances from cpm.db -> file.db to cpm.parked_cars -> self of cpm
-
+# load non checkout instances from cpm.db -> file.db to cpm.parked_cars -> self of cpm
+def restoreState(dataBase:sql.Connection, cpm_id) -> dict:
+    parked = dataBase.execute(
+        f'''SELECT license_plate, check_in, check_out, id
+            FROM parkings
+            WHERE car_parking_machine = "{cpm_id}" AND check_out IS NULL'''
+    ).fetchall()
+    return {t[0]: ParkedCar(*t) for t in parked}
 
 if __name__ == "__main__":
     cpm = CarParkingMachine()
-
     while True:
         inp = input('''[I] Check-in car by license plate
 [O] Check-out car by license plate
