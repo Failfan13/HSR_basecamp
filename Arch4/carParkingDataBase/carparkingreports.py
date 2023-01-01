@@ -13,8 +13,8 @@ def allParkedReport(in_date:str='', out_date:list='', machine:str='', license:st
     for car in allParked:
         obj = carParkedObj(car)
         if not machine == '':   
-            headerList = ["license_plate","check-in",
-                "check-out","parking_fee"]       
+            headerList = ["license_plate","checked_in",
+                "checked_out","parking_fee"]       
             fileName = 'parkedcars_{}_from_{}_to_{}'.format(machine, in_date, out_date)
             obj.pop('cpm_name')
             csvListDict.append({headerList[i]:(v if not v is None else 'None') for i,v in enumerate(obj.values())})
@@ -28,12 +28,13 @@ def allParkedReport(in_date:str='', out_date:list='', machine:str='', license:st
         else:
             headerList = ["car_parking_machine","check_in",
                 "check_out","parking_fee"]       
-            fileName = 'complete_parkings_{}'.format(license)
+            fileName = 'all_parkings_for_{}'.format(license)
             obj.pop('license')
             csvListDict.append({headerList[i]:(v if not v is None else 'None') for i,v in enumerate(obj.values())})
     if not tempDict == {}:
         csvListDict.append(tempDict)
     if not csvListDict == []:
+        csvListDict.reverse()
         writeToCSV(csvListDict, headerList, fileName)
     exit()
         
@@ -53,7 +54,7 @@ def dictAllParked(in_date:str, out_date:str, machine, license) -> list:
 
 
 def carParkedObj(parked:tuple):
-    keys = ['cpm_name', 'license', 'check_in', 'check_out', 'fee']
+    keys = ['cpm_name', 'license', 'checked_in', 'checked_out', 'fee']
     return {keys[i]:v for i,v in enumerate(parked)}
 
 

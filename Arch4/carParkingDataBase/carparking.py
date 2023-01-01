@@ -22,7 +22,7 @@ class CarParkingMachine:
         self.parked_cars = restoreState(self.db_con, self.cpm_name)
 
     # Checkin / Insert new car
-    def check_in(self, license_plate: str, check_in: str = dt.now() - timedelta(days=3)) -> None:
+    def check_in(self, license_plate: str, check_in: str = dt.now()) -> None:
         if len(self.parked_cars) < self.capacity and self.find_last_checkin(license_plate) == True:
             parkedInsert = self.insert(ParkedCar(license_plate, check_in.strftime('%d-%m-%Y %H:%M:%S')))
             self.parked_cars[license_plate] = parkedInsert
@@ -123,23 +123,25 @@ def restoreState(dataBase:sql.Connection, cpm_id) -> dict:
     return {t[0]: ParkedCar(*t) for t in parked}
 
 if __name__ == "__main__":
-    cpm = CarParkingMachine()
-    while True:
-        inp = input('''[I] Check-in car by license plate
-[O] Check-out car by license plate
-[Q] Quit program''').upper()
-        if inp == 'I':
-            if cpm.check_in(input().upper()) is not False:
-                print('License registered!')
-            elif cpm.capacity >= len(cpm.parked_cars):
-                print('Capacity reached!')
-            else:
-                print('Already Parked!')
-        elif inp == 'O':
-            outp = cpm.check_out(input().upper())
-            if outp is not None:
-                print(f'Parking fee: {outp:.2f} EUR')
-            else:
-                print(f'License {inp} not found!')
-        elif inp == 'Q':
-            break
+    cpm = CarParkingMachine(hourly_rate=4.0)
+    cpm.check_in('BB-494-H')
+#     cpm = CarParkingMachine()
+#     while True:
+#         inp = input('''[I] Check-in car by license plate
+# [O] Check-out car by license plate
+# [Q] Quit program''').upper()
+#         if inp == 'I':
+#             if cpm.check_in(input().upper()) is not False:
+#                 print('License registered!')
+#             elif cpm.capacity >= len(cpm.parked_cars):
+#                 print('Capacity reached!')
+#             else:
+#                 print('Already Parked!')
+#         elif inp == 'O':
+#             outp = cpm.check_out(input().upper())
+#             if outp is not None:
+#                 print(f'Parking fee: {outp:.2f} EUR')
+#             else:
+#                 print(f'License {inp} not found!')
+#         elif inp == 'Q':
+#             break
